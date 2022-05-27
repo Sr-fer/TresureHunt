@@ -1,0 +1,32 @@
+body {
+    background: #34495e;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 1%;
+}
+
+section {
+    display: grid;
+    flex-direction: row;
+    flex-wrap: wrap;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1%;
+}
+
+article {
+    flex: 1;
+    padding: 1em;
+    text-align: center;
+    font-size: xx-large;
+}
+
+#init {
+    flex: 1;
+    padding: 1em;
+    text-align: center;
+    font-size: xx-large;
+    margin-top: 100%;
+}
