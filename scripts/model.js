@@ -79,4 +79,36 @@ class Model {
         var diffY = e.offsetY - target.y
         return Math.sqrt((diffX * diffX) + (diffY * diffY))
     }
+
+    /**
+    * Pista proporcionada al usuario para saver si donde pincha esta cerca o lejos del punto laeatorio creado
+    * @param {Number} distance Guarda la diferencia entre el punto aleatorio y donde pincha el usuario
+    */
+    distanceHint(distance) {
+        if(distance < 20){
+            alert("Found the Tresure in " + this.clicks + " clicks!")
+            return ["You've found the tresure", true]
+        }
+        else if (distance < 40) {
+            return ["Boiling Hot!", false]
+        }
+        else if (distance < 60) {
+            return ["Really Hot", false]
+        }
+        else if (distance < 80) {
+            return ["Hot", false] 
+        }
+        else if (distance < 160) {
+            return ["Warm", false]  
+        }
+        else if (distance < 380) {
+            return ["Cold", false]  
+        }
+        else if (distance < 760) {
+            return ["Really Cold", false] 
+        }
+        else {
+            return ["Freezing!", false]
+        }
+    }
 }
