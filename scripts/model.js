@@ -117,4 +117,13 @@ class Model {
         alert("Time has gone!")
         location.reload()
     }
+
+    /**
+    * Crea el evento del Cronometro
+    * @param {String} auxChrono Objeto de la clase Chronometro de la cual se va ha crear el evento
+    */
+    chronoEvent(auxChrono) {
+        auxChrono.chronoInterval = null
+        auxChrono.chronoInterval = setInterval(this.startChrono, 10, auxChrono)
+    }
 }
