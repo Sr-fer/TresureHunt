@@ -4,12 +4,22 @@ class Model {
     * @type {Array} Array que guarda los objetos creados de la clase imagen
     * @type {Array} Array que guarda los objetos creado de la clase user
     * @type {Array} Array que guarda los objetos creado de la clase chrono
+    * @type {Number} Clicks que utiliza el usuario
+    * @type {String | Number} Guarda coordenadas en determinadas dimensiones
+    * @type {String | Number} Guarda las coordenadas donde pincha el usuario con el ratón
+    * @type {String} Guarda las pistas que le dará el juego al usuario
+    * @type {String} Id del temporizador que termina la partida si se acaba el tiempo
     */
 
     constructor() {
         this.image = []
         this.user = []
         this.chrono = []
+        this.clicks = 0
+        this.target;
+        this.distance;
+        this.distHint;
+        this.timerId;
     }
 
     /**
