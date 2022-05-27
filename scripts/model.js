@@ -80,6 +80,7 @@ class Model {
         return Math.sqrt((diffX * diffX) + (diffY * diffY))
     }
     
+
     /**
     * Pista proporcionada al usuario para saver si donde pincha esta cerca o lejos del punto laeatorio creado
     * @param {Number} distance Guarda la diferencia entre el punto aleatorio y donde pincha el usuario
