@@ -21,12 +21,4 @@ class View {
      handlerHints(response) {
         this.hint.innerHTML = `<h1>${response}<h1>` //integrar el texto de las pistas en el html
     }
-
-    /**
-     * Devuelve el contenido del cronometro
-     * @returns {String} Devuelve el contenido del cronometro
-     */
-    handlerTime() {
-        return this.hms.textContent
-    }
 }

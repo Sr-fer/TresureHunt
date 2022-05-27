@@ -9,6 +9,9 @@ class Model {
     * @type {String | Number} Guarda las coordenadas donde pincha el usuario con el ratón
     * @type {String} Guarda las pistas que le dará el juego al usuario
     * @type {String} Id del temporizador que termina la partida si se acaba el tiempo
+    * @type {String} variable que guarda el tiempo en el que se encuentra el temporizador al finalizar la partida
+    * @type {String} variable para saber si el jugador quiere jugar otra partida
+    * @type {String} nombre que corresponde al jugador en esta partida
     */
 
     constructor() {
@@ -20,6 +23,9 @@ class Model {
         this.distance;
         this.distHint;
         this.timerId;
+        this.timerSet;
+        this.othGame;
+        this.name;
     }
 
     /**

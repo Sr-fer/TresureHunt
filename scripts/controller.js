@@ -37,10 +37,7 @@ class Controller {
         view.start.disabled = true //el boton queda deshablitado
         model.timerId = setTimeout(model.limitTime, 60000)
 
-        /**
-        * @param {String} name nombre que corresponde al jugador en esta partida
-        */
-        var name = prompt("What's your name?")
+        model.name = prompt("What's your name?")
 
         this.model.target = { //aleatorizar un punto segun el ancho y alto que hemos definido antes
             x: model.getRandomNumber(myImg.WIDTH),
@@ -59,19 +56,16 @@ class Controller {
 
         if(model.distHint[1] == true) {
             clearTimeout(model.timerId) //limpiar el temporizador de derrota
+            model.timerSet = myChrono.chronoMinutes + ":" + myChrono.chronoSeconds + ":" + myChrono.chronoMiliseconds //define la variable ttimerSet
             model.stopChronoInterval(myChrono) //parar el cronometro
             myUser.setClicks(model.clicks) //definir los clikcs del jugador
-            myUser.setTime(view.handlerTime()) //definir el tiempo del jugador
-            myUser.setUserName(name) //definir el nombre del jugador
+            myUser.setTime(model.timerSet) //definir el tiempo del jugador
+            myUser.setUserName(model.name) //definir el nombre del jugador
             console.log(myUser) //mostrar por pantalla al jugador
             //model.sendRequest(myUser)
 
-            /**
-            * variable para saber si el jugador quiere jugar otra partida
-            * @param {String} OthGame nombre que corresponde al jugador en esta partida
-            */
-            var OthGame = prompt("Whant to play another game? 1:yes 2:no")
-            if(OthGame == "1") { //Si
+            model.othGame = prompt("Whant to play another game? 1:yes 2:no")
+            if(model.othGame == "1") { //Si
                 location.reload() //recargar la página
             }
             else { //No
