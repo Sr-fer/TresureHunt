@@ -60,4 +60,11 @@ class Model {
         this.user.push(new User(id))
     }
 
+    /**
+    * Crea un número aleatorio dependiendo de que tamaño le propociones
+    * @param {Number} size Tamaño proporcionado en el que creeara el número aleatorio
+    */
+    getRandomNumber(size){
+        return Math.floor(Math.random() * size)
+    }
 }
