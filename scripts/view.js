@@ -13,4 +13,20 @@ class View {
         this.start = document.getElementById("start")
         this.hms = document.getElementById("hms")
     }
+
+    /**
+        * Escribe la pista en el html
+        * @param {String} response pista que tendrá que verse en el html
+        */
+     handlerHints(response) {
+        this.hint.innerHTML = `<h1>${response}<h1>` //integrar el texto de las pistas en el html
+    }
+
+    /**
+     * Devuelve el contenido del cronometro
+     * @returns {String} Devuelve el contenido del cronometro
+     */
+    handlerTime() {
+        return this.hms.textContent
+    }
 }
