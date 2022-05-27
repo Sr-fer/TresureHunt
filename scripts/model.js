@@ -79,7 +79,6 @@ class Model {
         var diffY = e.offsetY - target.y
         return Math.sqrt((diffX * diffX) + (diffY * diffY))
     }
-    
 
     /**
     * Pista proporcionada al usuario para saver si donde pincha esta cerca o lejos del punto laeatorio creado
