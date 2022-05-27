@@ -67,7 +67,7 @@ class Model {
     getRandomNumber(size){
         return Math.floor(Math.random() * size)
     }
-    
+
     /**
     * Determina donde pincha el usuario con el ratón
     * @param {String} e Función del evento
@@ -110,5 +110,49 @@ class Model {
         else {
             return ["Freezing!", false]
         }
+    }
+
+    //Función que finaliza la partida si se termina el tiempo
+    limitTime() {
+        alert("Time has gone!")
+        location.reload()
+    }
+
+    /**
+    * Crea el evento del Cronometro
+    * @param {String} auxChrono Objeto de la clase Chronometro de la cual se va ha crear el evento
+    */
+    chronoEvent(auxChrono) {
+        auxChrono.chronoInterval = null
+        auxChrono.chronoInterval = setInterval(this.startChrono, 10, auxChrono)
+    }
+
+    /**
+    * Funcionalidad del cronometro
+    * @param {String} auxChrono Objeto de la clase Chronometro de la cual se va ha crear el evento
+    */
+    startChrono(auxChrono) {
+        auxChrono.chronoCounter++
+    if (auxChrono.chronoCounter < 100) {
+        auxChrono.chronoMiliseconds = auxChrono.chronoCounter
+    }
+    if (auxChrono.chronoCounter == 100) {
+        auxChrono.chronoCounter = 0
+        auxChrono.chronoSeconds++
+    if (auxChrono.chronoSeconds == 60) {
+        auxChrono.chronoSeconds = 0
+        auxChrono.chronoMinutes++
+    }
+    }
+    auxChrono.chronoText.innerHTML = auxChrono.chronoMinutes + ":" + auxChrono.chronoSeconds + ":" + auxChrono.chronoMiliseconds;
+    }
+
+    /**
+    * Para el cronometro
+    * @param {String} auxChrono Objeto de la clase Chronometro de la cual se va ha crear el evento
+    */
+    stopChronoInterval(auxChrono) {
+        clearInterval(auxChrono.chronoInterval)
+        auxChrono.chronoInterval = null
     }
 }
