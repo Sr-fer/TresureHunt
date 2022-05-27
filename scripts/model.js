@@ -67,4 +67,16 @@ class Model {
     getRandomNumber(size){
         return Math.floor(Math.random() * size)
     }
+
+    /**
+    * Determina donde pincha el usuario con el ratón
+    * @param {String} e Función del evento
+    * @param {String | Number} target Contiene las dimensiones aleatorias de la imagen
+    * @returns {Number} Devuelve las cordenadas donde el usuario pincha con el ratón
+    */
+    getDistance(e, target) {
+        var diffX = e.offsetX - target.x
+        var diffY = e.offsetY - target.y
+        return Math.sqrt((diffX * diffX) + (diffY * diffY))
+    }
 }
