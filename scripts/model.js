@@ -146,4 +146,13 @@ class Model {
     }
     auxChrono.chronoText.innerHTML = auxChrono.chronoMinutes + ":" + auxChrono.chronoSeconds + ":" + auxChrono.chronoMiliseconds;
     }
+
+    /**
+    * Para el cronometro
+    * @param {String} auxChrono Objeto de la clase Chronometro de la cual se va ha crear el evento
+    */
+    stopChronoInterval(auxChrono) {
+        clearInterval(auxChrono.chronoInterval)
+        auxChrono.chronoInterval = null
+    }
 }
