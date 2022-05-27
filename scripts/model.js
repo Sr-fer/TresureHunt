@@ -111,4 +111,10 @@ class Model {
             return ["Freezing!", false]
         }
     }
+
+    //Función que finaliza la partida si se termina el tiempo
+    limitTime() {
+        alert("Time has gone!")
+        location.reload()
+    }
 }
