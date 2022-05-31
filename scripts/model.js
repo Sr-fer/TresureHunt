@@ -12,6 +12,7 @@ class Model {
     * @type {String} variable que guarda el tiempo en el que se encuentra el temporizador al finalizar la partida
     * @type {String} variable para saber si el jugador quiere jugar otra partida
     * @type {String} nombre que corresponde al jugador en esta partida
+    * @type {boolean} comprueba si el jugador a dado al botón start para empezar el evento del mapa
     */
 
     constructor() {
@@ -26,6 +27,7 @@ class Model {
         this.timerSet;
         this.othGame;
         this.name;
+        this.eventCheck = false
     }
 
     /**
@@ -170,5 +172,25 @@ class Model {
     stopChronoInterval(auxChrono) {
         clearInterval(auxChrono.chronoInterval)
         auxChrono.chronoInterval = null
+    }
+
+    /**
+    * Llama al php para recibir los datos de la Base de datos
+    * @param {String} auxChrono Objeto de la clase Chronometro de la cual se van a recoger los datos
+    */
+    sendRequest(auxUser) {
+        $.ajax({
+            data:{"name": auxUser.userName ,"clicks": auxUser.clicks , "time": auxUser.time},
+            url:'php/main.php',
+            type:'get',
+            success:function(response){
+            var conect = JSON.parse(response);
+            console.log(conect);
+            for(var i=0;i<conect.length;i++){
+                console.log("Name: "+ conect[i].name +" Time: "
+                + conect[i].time + " Clicks: "+ conect[i].clicks);
+            }
+            }
+        })
     }
 }
