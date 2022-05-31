@@ -38,6 +38,7 @@ class Controller {
         model.timerId = setTimeout(model.limitTime, 60000)
 
         model.name = prompt("What's your name?")
+        model.eventCheck = true
 
         this.model.target = { //aleatorizar un punto segun el ancho y alto que hemos definido antes
             x: model.getRandomNumber(myImg.WIDTH),
@@ -45,9 +46,11 @@ class Controller {
         }
 
         model.chronoEvent(myChrono) //empezar el tiempo del cronometro
+    })
         
 
     view.map.addEventListener("click", function (e) { //evento para encontrar  --- View
+        if(model.eventCheck == true) {
         model.clicks++ //aumentar el numero de clicks cada vez que se hace el evento
         model.distance = model.getDistance(e, model.target) //gurdar diferencia entre el punto aleatorio y el click del jugador
         model.distHint = model.distanceHint(model.distance) //guardar la pista del juego para saber que tan cerca está el jugador de encontrar el tesoro
@@ -70,10 +73,10 @@ class Controller {
             }
             else { //No
                 alert("End of the game") //avisa al jugador que se ha terminado la partida
-                //view.map.removeEventListener("click", funcion definida)
+                model.eventCheck = false
             }
         }
-    })
+    }
     })
     }
 }

@@ -12,6 +12,7 @@ class Model {
     * @type {String} variable que guarda el tiempo en el que se encuentra el temporizador al finalizar la partida
     * @type {String} variable para saber si el jugador quiere jugar otra partida
     * @type {String} nombre que corresponde al jugador en esta partida
+    * @type {boolean} comprueba si el jugador a dado al botón start para empezar el evento del mapa
     */
 
     constructor() {
@@ -26,6 +27,7 @@ class Model {
         this.timerSet;
         this.othGame;
         this.name;
+        this.eventCheck = false
     }
 
     /**
