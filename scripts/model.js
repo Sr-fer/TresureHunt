@@ -173,4 +173,24 @@ class Model {
         clearInterval(auxChrono.chronoInterval)
         auxChrono.chronoInterval = null
     }
+
+    /**
+    * Llama al php para recibir los datos de la Base de datos
+    * @param {String} auxChrono Objeto de la clase Chronometro de la cual se van a recoger los datos
+    */
+    sendRequest(auxUser) {
+        $.ajax({
+            data:{"name": auxUser.userName ,"clicks": auxUser.clicks , "time": auxUser.time},
+            url:'php/main.php',
+            type:'get',
+            success:function(response){
+            var conect = JSON.parse(response);
+            console.log(conect);
+            for(var i=0;i<conect.length;i++){
+                console.log("Name: "+ conect[i].name +" Time: "
+                + conect[i].time + " Clicks: "+ conect[i].clicks);
+            }
+            }
+        })
+    }
 }

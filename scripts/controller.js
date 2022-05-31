@@ -65,7 +65,7 @@ class Controller {
             myUser.setTime(model.timerSet) //definir el tiempo del jugador
             myUser.setUserName(model.name) //definir el nombre del jugador
             console.log(myUser) //mostrar por pantalla al jugador
-            //model.sendRequest(myUser)
+            model.sendRequest(myUser) //llamada php
 
             model.othGame = prompt("Whant to play another game? 1:yes 2:no")
             if(model.othGame == "1") { //Si
@@ -73,7 +73,7 @@ class Controller {
             }
             else { //No
                 alert("End of the game") //avisa al jugador que se ha terminado la partida
-                model.eventCheck = false
+                model.eventCheck = false //cancelamos el evento del mapa
             }
         }
     }
