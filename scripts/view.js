@@ -41,9 +41,9 @@ class View {
     * @param {Function} handler función que realizará el evento del mapa
     */
     eventMap(handler){
-        this.map.addEventListener("click", ()  => {
+        this.map.addEventListener("click", (e)  => {
             if(this.eventCheck == true) {
-            handler()
+            handler(e)
             }
         })
     }

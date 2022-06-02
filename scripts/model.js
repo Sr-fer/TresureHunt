@@ -170,9 +170,15 @@ class Model {
 
     /**
     * Llama al php para recibir los datos de la Base de datos
-    * @param {String} auxChrono Objeto de la clase Chronometro de la cual se van a recoger los datos
+    * @param {String} auxUser Objeto de la clase Usuario de la cual se van a recoger los datos
     */
-    sendRequest(auxUser) {
+    sendRequest() {
+
+        /**
+        * @param {String} auxUser Objeto de la clase Usuario de la cual se van a recoger los datos
+        */
+        var auxUser = this.getUser("PlayerUser")
+
         $.ajax({
             data:{"name": auxUser.userName ,"clicks": auxUser.clicks , "time": auxUser.time},
             url:'php/main.php',
@@ -188,13 +194,13 @@ class Model {
         })
     }
 
-    /**
-    * Función que declara la parte del model que hará el boton start
-    * @param {String} auxUser objeto de la clase User
-    * @param {String} auxImg objeto de la clase ImageAdjust
-    * @param {String} auxChrono objeto de la clase Chrono
-    */
-    handlerStart = () => {
+    handlerStart = () => { //Función que declara la parte del model que hará el boton start
+
+        /**
+        * @param {String} auxUser objeto de la clase User
+        * @param {String} auxImg objeto de la clase ImageAdjust
+        * @param {String} auxChrono objeto de la clase Chrono
+        */
         var auxUser = this.getUser("PlayerUser")
         var auxImg = this.getImg("PlayerImg")
         var auxChrono = this.getChrono("PlayerChrono")
@@ -207,20 +213,19 @@ class Model {
         this.chronoEvent(auxChrono) //empezar el tiempo del cronometro
     }
 
-    /**
-    * Función que declara la parte del model que hará el evento del mapa
-    * @param {String} auxUser objeto de la clase User
-    * @param {String} auxChrono objeto de la clase Chrono
-    */
-    handlerMap = () => { 
-
+    handlerMap = (e) => {  //Función que declara la parte del model que hará el evento del mapa
+   
+        /**
+        * @param {String} auxUser objeto de la clase User
+        * @param {String} auxChrono objeto de la clase Chrono
+        */
         var auxChrono = this.getUser("PlayerUser")
         var auxChrono = this.getChrono("PlayerChrono")
 
         this.clicks++ //aumentar el numero de clicks cada vez que se hace el evento
         this.distance = this.getDistance(e, this.target) //gurdar diferencia entre el punto aleatorio y el click del jugador //e
         this.distHint = this.distanceHint(this.distance) //guardar la pista del juego para saber que tan cerca está el jugador de encontrar el tesoro
-        //view.handlerHints(this.distHint[0]) //view
+        view.handlerHints(this.distHint[0]) //view
     
         if(this.distHint[1] == true) {
             clearTimeout(this.timerId) //limpiar el temporizador de derrota
