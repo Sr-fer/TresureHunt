@@ -32,25 +32,11 @@ class Controller {
         myImg.setHeigh(800) //Definir el alto de la imagen
         myChrono.setChronoText(view.hms) //Definir el texto del cronometro
         myChrono.setStart(view.start) //Definir el boton de empezar del cronometro
-
-    view.start.addEventListener("click", () => { //evento que empieza el juego con el boton start --- View
-        view.start.disabled = true //el boton queda deshablitado
-        model.timerId = setTimeout(model.limitTime, 60000)
-
-        model.name = prompt("What's your name?")
-        model.eventCheck = true
-
-        this.model.target = { //aleatorizar un punto segun el ancho y alto que hemos definido antes
-            x: model.getRandomNumber(myImg.WIDTH),
-            y: model.getRandomNumber(myImg.HEIGH)
-        }
-
-        model.chronoEvent(myChrono) //empezar el tiempo del cronometro
-    })
+        this.view.eventStart(this.model.handlerStart) //handler para empezar el evento start
         
 
     view.map.addEventListener("click", function (e) { //evento para encontrar  --- View
-        if(model.eventCheck == true) {
+        if(view.eventCheck == true) {
         model.clicks++ //aumentar el numero de clicks cada vez que se hace el evento
         model.distance = model.getDistance(e, model.target) //gurdar diferencia entre el punto aleatorio y el click del jugador
         model.distHint = model.distanceHint(model.distance) //guardar la pista del juego para saber que tan cerca está el jugador de encontrar el tesoro
@@ -63,7 +49,6 @@ class Controller {
             model.stopChronoInterval(myChrono) //parar el cronometro
             myUser.setClicks(model.clicks) //definir los clikcs del jugador
             myUser.setTime(model.timerSet) //definir el tiempo del jugador
-            myUser.setUserName(model.name) //definir el nombre del jugador
             console.log(myUser) //mostrar por pantalla al jugador
             model.sendRequest(myUser) //llamada php
 
@@ -73,7 +58,7 @@ class Controller {
             }
             else { //No
                 alert("End of the game") //avisa al jugador que se ha terminado la partida
-                model.eventCheck = false //cancelamos el evento del mapa
+                view.eventCheck = false //cancelamos el evento del mapa
             }
         }
     }

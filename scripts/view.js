@@ -15,10 +15,22 @@ class View {
     }
 
     /**
-        * Escribe la pista en el html
-        * @param {String} response pista que tendrá que verse en el html
-        */
-     handlerHints(response) {
+    * Escribe la pista en el html
+    * @param {String} response pista que tendrá que verse en el html
+    */
+    handlerHints(response) {
         this.hint.innerHTML = `<h1>${response}<h1>` //integrar el texto de las pistas en el html
+    }
+
+    /**
+    * Evento del botón start
+    * @param {Function} handler función que realizará el evento empezar
+    */
+    eventStart(handler) {
+        this.start.addEventListener("click", () => {
+            handler()
+            this.start.disabled = true //el boton queda deshablitado
+            this.eventCheck = true //activa el evento del mapa
+        })
     }
 }
