@@ -206,4 +206,45 @@ class Model {
         }
         this.chronoEvent(auxChrono) //empezar el tiempo del cronometro
     }
+
+    /**
+    * Función que declara la parte del model que hará el evento del mapa
+    * @param {String} auxUser objeto de la clase User
+    * @param {String} auxChrono objeto de la clase Chrono
+    */
+    handlerMap = () => { 
+
+        var auxChrono = this.getUser("PlayerUser")
+        var auxChrono = this.getChrono("PlayerChrono")
+
+        this.clicks++ //aumentar el numero de clicks cada vez que se hace el evento
+        this.distance = this.getDistance(e, this.target) //gurdar diferencia entre el punto aleatorio y el click del jugador //e
+        this.distHint = this.distanceHint(this.distance) //guardar la pista del juego para saber que tan cerca está el jugador de encontrar el tesoro
+        //view.handlerHints(this.distHint[0]) //view
+    
+        if(this.distHint[1] == true) {
+            clearTimeout(this.timerId) //limpiar el temporizador de derrota
+            this.stopChronoInterval(auxChrono) //parar el cronometro
+            this.timerSet = auxChrono.chronoMinutes + ":" + auxChrono.chronoSeconds + ":" +auxChrono.chronoMiliseconds //define la variable ttimerSet
+            auxUser.setClicks(this.clicks) //definir los clikcs del jugador
+            auxUser.setTime(this.timerSet) //definir el tiempo del jugador
+            console.log(auxUser) //mostrar por pantalla al jugador
+            this.sendRequest(auxUser) //llamada php
+                
+
+            /**
+            * @param {String} othGame Variable para jugar otra partida
+            */
+
+            var othGame = prompt("Whant to play another game? 1:yes 2:no")
+
+            if(othGame == "1") { //Si
+                location.reload() //recargar la página
+            }
+            else { //No
+                alert("End of the game") //avisa al jugador que se ha terminado la partida
+                //view.eventCheck = false //cancelamos el evento del mapa //view
+            }
+        }
+    }
 }
