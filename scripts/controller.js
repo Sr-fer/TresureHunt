@@ -27,8 +27,66 @@ class Controller {
         myImg.setHeigh(800) //Definir el alto de la imagen
         myChrono.setChronoText(view.hms) //Definir el texto del cronometro
         myChrono.setStart(view.start) //Definir el boton de empezar del cronometro
-        this.view.eventStart(this.model.handlerStart) //handler para empezar el evento start
-        this.view.eventMap(this.model.handlerMap) //handler para empezar el evento map
+        this.view.eventStart(this.handlerStart) //handler para empezar el evento start
+        this.view.eventMap(this.handlerMap) //handler para empezar el evento map
+    }
+
+    handlerStart = () => { //Función que declara la parte del model que hará el boton start
+
+        /**
+        * @param {String} auxUser objeto de la clase User
+        * @param {String} auxImg objeto de la clase ImageAdjust
+        * @param {String} auxChrono objeto de la clase Chrono
+        */
+        var auxUser = this.model.getUser("PlayerUser")
+        var auxImg = this.model.getImg("PlayerImg")
+        var auxChrono = this.model.getChrono("PlayerChrono")
+        this.model.timerId = setTimeout(this.model.limitTime, 60000) //temporizador 1 minuto
+        auxUser.setUserName(prompt("What's your name?")) //definir el nombre del jugador
+        this.model.target = { //aleatorizar un punto segun el ancho y alto que hemos definido antes de la imagen
+            x: this.model.getRandomNumber(auxImg.WIDTH),
+            y: this.model.getRandomNumber(auxImg.HEIGH)
+        }
+        this.model.chronoEvent(auxChrono) //empezar el tiempo del cronometro
+    }
+
+    handlerMap = (e) => {  //Función que declara la parte del model que hará el evento del mapa
+   
+        /**
+        * @param {String} auxUser objeto de la clase User
+        * @param {String} auxChrono objeto de la clase Chrono
+        */
+        var auxUser = this.model.getUser("PlayerUser")
+        var auxChrono = this.model.getChrono("PlayerChrono")
+
+        this.model.clicks++ //aumentar el numero de clicks cada vez que se hace el evento
+        this.model.distance = this.model.getDistance(e, this.model.target) //gurdar diferencia entre el punto aleatorio y el click del jugador //e
+        this.model.distHint = this.model.distanceHint(this.model.distance) //guardar la pista del juego para saber que tan cerca está el jugador de encontrar el tesoro
+        this.view.handlerHints(this.model.distHint[0]) //view
+    
+        if(this.model.distHint[1] == true) {
+            clearTimeout(this.model.timerId) //limpiar el temporizador de derrota
+            this.model.stopChronoInterval(auxChrono) //parar el cronometro
+            this.model.timerSet = auxChrono.chronoMinutes + ":" + auxChrono.chronoSeconds + ":" +auxChrono.chronoMiliseconds //define la variable ttimerSet
+            auxUser.setClicks(this.model.clicks) //definir los clikcs del jugador
+            auxUser.setTime(this.model.timerSet) //definir el tiempo del jugador
+            console.log(auxUser) //mostrar por pantalla al jugador
+            this.model.sendRequest(auxUser) //llamada php
+                
+            /**
+            * @param {String} othGame Variable para jugar otra partida
+            */
+
+            var othGame = prompt("Whant to play another game? 1:yes 2:no")
+
+            if(othGame == "1") { //Si
+                location.reload() //recargar la página
+            }
+            else { //No
+                alert("End of the game") //avisa al jugador que se ha terminado la partida
+                this.view.eventCheck = false //cancelamos el evento del mapa //view
+            }
+        }
     }
 }
 
