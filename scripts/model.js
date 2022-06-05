@@ -10,9 +10,6 @@ class Model {
     * @type {String} Guarda las pistas que le dará el juego al usuario
     * @type {String} Id del temporizador que termina la partida si se acaba el tiempo
     * @type {String} variable que guarda el tiempo en el que se encuentra el temporizador al finalizar la partida
-    * @type {String} variable para saber si el jugador quiere jugar otra partida
-    * @type {String} nombre que corresponde al jugador en esta partida
-    * @type {boolean} comprueba si el jugador a dado al botón start para empezar el evento del mapa
     */
 
     constructor() {
@@ -25,9 +22,6 @@ class Model {
         this.distHint;
         this.timerId;
         this.timerSet;
-        this.othGame;
-        this.name;
-        this.eventCheck = false
     }
 
     /**
@@ -176,9 +170,15 @@ class Model {
 
     /**
     * Llama al php para recibir los datos de la Base de datos
-    * @param {String} auxChrono Objeto de la clase Chronometro de la cual se van a recoger los datos
+    * @param {String} auxUser Objeto de la clase Usuario de la cual se van a recoger los datos
     */
-    sendRequest(auxUser) {
+    sendRequest() {
+
+        /**
+        * @param {String} auxUser Objeto de la clase Usuario de la cual se van a recoger los datos
+        */
+        var auxUser = this.getUser("PlayerUser")
+
         $.ajax({
             data:{"name": auxUser.userName ,"clicks": auxUser.clicks , "time": auxUser.time},
             url:'php/main.php',

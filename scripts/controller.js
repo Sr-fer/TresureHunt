@@ -1,8 +1,8 @@
 class Controller {
     
     /**
-    * @param {Number} model objeto de la clase Model
-    * @param {Number} view objeto de la clase View
+    * @param {String} model objeto de la clase Model
+    * @param {String} view objeto de la clase View
     */
 
     constructor(model, view) {
@@ -23,61 +23,70 @@ class Controller {
         */
         var myChrono = this.model.getChrono("PlayerChrono")
 
-        /**
-        * @param {Object} myUser Guardar el objeto en una variable
-        */
-        var myUser = this.model.getUser("PlayerUser")
-
         myImg.setWidth(1000) //Definir el ancho de la imagen
         myImg.setHeigh(800) //Definir el alto de la imagen
         myChrono.setChronoText(view.hms) //Definir el texto del cronometro
         myChrono.setStart(view.start) //Definir el boton de empezar del cronometro
+        this.view.eventStart(this.handlerStart) //handler para empezar el evento start
+        this.view.eventMap(this.handlerMap) //handler para empezar el evento map
+    }
 
-    view.start.addEventListener("click", () => { //evento que empieza el juego con el boton start --- View
-        view.start.disabled = true //el boton queda deshablitado
-        model.timerId = setTimeout(model.limitTime, 60000)
+    handlerStart = () => { //Función que declara la parte del model que hará el boton start
 
-        model.name = prompt("What's your name?")
-        model.eventCheck = true
-
-        this.model.target = { //aleatorizar un punto segun el ancho y alto que hemos definido antes
-            x: model.getRandomNumber(myImg.WIDTH),
-            y: model.getRandomNumber(myImg.HEIGH)
+        /**
+        * @param {String} auxUser objeto de la clase User
+        * @param {String} auxImg objeto de la clase ImageAdjust
+        * @param {String} auxChrono objeto de la clase Chrono
+        */
+        var auxUser = this.model.getUser("PlayerUser")
+        var auxImg = this.model.getImg("PlayerImg")
+        var auxChrono = this.model.getChrono("PlayerChrono")
+        this.model.timerId = setTimeout(this.model.limitTime, 60000) //temporizador 1 minuto
+        auxUser.setUserName(prompt("What's your name?")) //definir el nombre del jugador
+        this.model.target = { //aleatorizar un punto segun el ancho y alto que hemos definido antes de la imagen
+            x: this.model.getRandomNumber(auxImg.WIDTH),
+            y: this.model.getRandomNumber(auxImg.HEIGH)
         }
+        this.model.chronoEvent(auxChrono) //empezar el tiempo del cronometro
+    }
 
-        model.chronoEvent(myChrono) //empezar el tiempo del cronometro
-    })
-        
+    handlerMap = (e) => {  //Función que declara la parte del model que hará el evento del mapa
+   
+        /**
+        * @param {String} auxUser objeto de la clase User
+        * @param {String} auxChrono objeto de la clase Chrono
+        */
+        var auxUser = this.model.getUser("PlayerUser")
+        var auxChrono = this.model.getChrono("PlayerChrono")
 
-    view.map.addEventListener("click", function (e) { //evento para encontrar  --- View
-        if(model.eventCheck == true) {
-        model.clicks++ //aumentar el numero de clicks cada vez que se hace el evento
-        model.distance = model.getDistance(e, model.target) //gurdar diferencia entre el punto aleatorio y el click del jugador
-        model.distHint = model.distanceHint(model.distance) //guardar la pista del juego para saber que tan cerca está el jugador de encontrar el tesoro
-        view.handlerHints(model.distHint[0]) //integrar el texto de las pistas en el html
+        this.model.clicks++ //aumentar el numero de clicks cada vez que se hace el evento
+        this.model.distance = this.model.getDistance(e, this.model.target) //gurdar diferencia entre el punto aleatorio y el click del jugador //e
+        this.model.distHint = this.model.distanceHint(this.model.distance) //guardar la pista del juego para saber que tan cerca está el jugador de encontrar el tesoro
+        this.view.handlerHints(this.model.distHint[0]) //view
+    
+        if(this.model.distHint[1] == true) {
+            clearTimeout(this.model.timerId) //limpiar el temporizador de derrota
+            this.model.stopChronoInterval(auxChrono) //parar el cronometro
+            this.model.timerSet = auxChrono.chronoMinutes + ":" + auxChrono.chronoSeconds + ":" +auxChrono.chronoMiliseconds //define la variable ttimerSet
+            auxUser.setClicks(this.model.clicks) //definir los clikcs del jugador
+            auxUser.setTime(this.model.timerSet) //definir el tiempo del jugador
+            console.log(auxUser) //mostrar por pantalla al jugador
+            this.model.sendRequest(auxUser) //llamada php
+                
+            /**
+            * @param {String} othGame Variable para jugar otra partida
+            */
 
+            var othGame = prompt("Whant to play another game? 1:yes 2:no")
 
-        if(model.distHint[1] == true) {
-            clearTimeout(model.timerId) //limpiar el temporizador de derrota
-            model.timerSet = myChrono.chronoMinutes + ":" + myChrono.chronoSeconds + ":" + myChrono.chronoMiliseconds //define la variable ttimerSet
-            model.stopChronoInterval(myChrono) //parar el cronometro
-            myUser.setClicks(model.clicks) //definir los clikcs del jugador
-            myUser.setTime(model.timerSet) //definir el tiempo del jugador
-            myUser.setUserName(model.name) //definir el nombre del jugador
-            console.log(myUser) //mostrar por pantalla al jugador
-            model.sendRequest(myUser) //llamada php
-
-            model.othGame = prompt("Whant to play another game? 1:yes 2:no")
-            if(model.othGame == "1") { //Si
+            if(othGame == "1") { //Si
                 location.reload() //recargar la página
             }
             else { //No
                 alert("End of the game") //avisa al jugador que se ha terminado la partida
-                model.eventCheck = false //cancelamos el evento del mapa
+                this.view.eventCheck = false //cancelamos el evento del mapa //view
             }
         }
-    }
-    })
     }
 }
 
