@@ -170,9 +170,15 @@ class Model {
 
     /**
     * Llama al php para recibir los datos de la Base de datos
-    * @param {String} auxChrono Objeto de la clase Chronometro de la cual se van a recoger los datos
+    * @param {String} auxUser Objeto de la clase Usuario de la cual se van a recoger los datos
     */
-    sendRequest(auxUser) {
+    sendRequest() {
+
+        /**
+        * @param {String} auxUser Objeto de la clase Usuario de la cual se van a recoger los datos
+        */
+        var auxUser = this.getUser("PlayerUser")
+
         $.ajax({
             data:{"name": auxUser.userName ,"clicks": auxUser.clicks , "time": auxUser.time},
             url:'php/main.php',
@@ -186,24 +192,5 @@ class Model {
             }
             }
         })
-    }
-
-    /**
-    * Función que declara la parte del model que hará el boton start
-    * @param {String} auxUser objeto de la clase User
-    * @param {String} auxImg objeto de la clase ImageAdjust
-    * @param {String} auxChrono objeto de la clase Chrono
-    */
-    handlerStart = () => {
-        var auxUser = this.getUser("PlayerUser")
-        var auxImg = this.getImg("PlayerImg")
-        var auxChrono = this.getChrono("PlayerChrono")
-        this.timerId = setTimeout(this.limitTime, 60000) //temporizador 1 minuto
-        auxUser.setUserName(prompt("What's your name?")) //definir el nombre del jugador
-        this.target = { //aleatorizar un punto segun el ancho y alto que hemos definido antes de la imagen
-            x: this.getRandomNumber(auxImg.WIDTH),
-            y: this.getRandomNumber(auxImg.HEIGH)
-        }
-        this.chronoEvent(auxChrono) //empezar el tiempo del cronometro
     }
 }
