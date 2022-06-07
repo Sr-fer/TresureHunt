@@ -70,8 +70,8 @@ class Controller {
             this.model.timerSet = auxChrono.chronoMinutes + ":" + auxChrono.chronoSeconds + ":" +auxChrono.chronoMiliseconds //define la variable ttimerSet
             auxUser.setClicks(this.model.clicks) //definir los clikcs del jugador
             auxUser.setTime(this.model.timerSet) //definir el tiempo del jugador
-            console.log(auxUser) //mostrar por pantalla al jugador
-            this.model.sendRequest(auxUser) //llamada php
+            this.model.uploadRequest() //subida al php
+            this.model.sendRequest() //llamada php
                 
             /**
             * @param {String} othGame Variable para jugar otra partida

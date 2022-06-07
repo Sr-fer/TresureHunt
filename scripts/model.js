@@ -186,10 +186,23 @@ class Model {
             success:function(response){
             var conect = JSON.parse(response);
             console.log(conect);
-            for(var i=0;i<conect.length;i++){
-                console.log("Name: "+ conect[i].name +" Time: "
-                + conect[i].time + " Clicks: "+ conect[i].clicks);
+            console.log("Name: "+  auxUser.userName +" Time: " + auxUser.clicks + " Clicks: "+ auxUser.time);
             }
+        })
+    }
+
+    uploadRequest() {
+
+        /**
+        * @param {String} auxUser Objeto de la clase Usuario de la cual se van a recoger los datos
+        */
+        var auxUser = this.getUser("PlayerUser")
+        $.ajax({
+            data:{"name": auxUser.userName ,"clicks": auxUser.clicks , "time": auxUser.time},
+            url:'php/upload.php',
+            type:'POST',
+            success:function(response){
+            console.log(response);
             }
         })
     }
