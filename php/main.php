@@ -1,5 +1,5 @@
 <?php
-class User{
+class UserRequest{
     public $Name;
     public $Time;
     public $Clicks;
@@ -25,7 +25,7 @@ class User{
     $users = array();
         if($result->num_rows>0){
             while($row = $result->fetch_assoc()){
-            $aux_user = new User($row["name"],$row["time"],$row["clicks"]);
+            $aux_user = new UserRequest($row["name"],$row["time"],$row["clicks"]);
             array_push($users,$aux_user);
         }
         }else{
