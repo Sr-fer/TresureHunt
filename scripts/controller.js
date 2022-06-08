@@ -41,6 +41,10 @@ class Controller {
         var auxUser = this.model.getUser("PlayerUser")
         var auxImg = this.model.getImg("PlayerImg")
         var auxChrono = this.model.getChrono("PlayerChrono")
+        this.model.clicks = 0 //definimos los clicks a 0 para una nueva partida
+        auxChrono.setChronoMinutes(0) //definimos el tiempo a 0 para una nueva partida
+        auxChrono.setChronoSeconds(0) //definimos el tiempo a 0 para una nueva partida
+        auxChrono.setChronoMiliseconds(0) //definimos el tiempo a 0 para una nueva partida
         this.model.timerId = setTimeout(this.model.limitTime, 60000) //temporizador 1 minuto
         auxUser.setUserName(prompt("What's your name?")) //definir el nombre del jugador
         this.model.target = { //aleatorizar un punto segun el ancho y alto que hemos definido antes de la imagen
@@ -80,11 +84,11 @@ class Controller {
             var othGame = prompt("Whant to play another game? 1:yes 2:no")
 
             if(othGame == "1") { //Si
-                location.reload() //recargar la página
+                this.handlerStart() //volver ha empezar el juego
             }
             else { //No
                 alert("End of the game") //avisa al jugador que se ha terminado la partida
-                this.view.eventCheck = false //cancelamos el evento del mapa //view
+                this.view.eventCheck = false //cancelamos el evento del mapa 
             }
         }
     }
