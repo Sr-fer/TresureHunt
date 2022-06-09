@@ -172,7 +172,7 @@ class Model {
     * Llama al php para recibir los datos de la Base de datos
     * @param {String} auxUser Objeto de la clase Usuario de la cual se van a recoger los datos
     */
-    sendRequest() {
+    sendRequestTime() {
 
         /**
         * @param {String} auxUser Objeto de la clase Usuario de la cual se van a recoger los datos
@@ -180,13 +180,13 @@ class Model {
         var auxUser = this.getUser("PlayerUser")
 
         $.ajax({
-            data:{"name": auxUser.userName ,"clicks": auxUser.clicks , "time": auxUser.time},
-            url:'php/main.php',
+            data:{"name": auxUser.userName , "time": auxUser.time},
+            url:'php/timeRequest.php',
             type:'get',
             success:function(response){
             var conect = JSON.parse(response);
             console.log(conect);
-            console.log("Name: "+  auxUser.userName +" Time: " + auxUser.clicks + " Clicks: "+ auxUser.time);
+            console.log("Name: "+  auxUser.userName +" Time: " + auxUser.time);
             }
         })
     }
@@ -203,6 +203,25 @@ class Model {
             type:'POST',
             success:function(response){
             console.log(response);
+            }
+        })
+    }
+
+    sendRequestClicks() {
+
+        /**
+        * @param {String} auxUser Objeto de la clase Usuario de la cual se van a recoger los datos
+        */
+        var auxUser = this.getUser("PlayerUser")
+
+        $.ajax({
+            data:{"name": auxUser.userName ,"clicks": auxUser.clicks},
+            url:'php/clicksRequest.php',
+            type:'get',
+            success:function(response){
+            var conect = JSON.parse(response);
+            console.log(conect);
+            console.log("Name: "+  auxUser.userName + " Clicks: " + auxUser.clicks);
             }
         })
     }
