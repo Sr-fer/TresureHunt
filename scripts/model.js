@@ -172,13 +172,14 @@ class Model {
     * Llama al php para recibir los datos de la Base de datos
     * @param {String} auxUser Objeto de la clase Usuario de la cual se van a recoger los datos
     */
-    sendRequest() {
+    sendRequestTime() {
 
         /**
         * @param {String} auxUser Objeto de la clase Usuario de la cual se van a recoger los datos
         */
         var auxUser = this.getUser("PlayerUser")
 
+        console.log("Time Ranking")
         $.ajax({
             data:{"name": auxUser.userName ,"clicks": auxUser.clicks , "time": auxUser.time},
             url:'php/main.php',
@@ -186,7 +187,7 @@ class Model {
             success:function(response){
             var conect = JSON.parse(response);
             console.log(conect);
-            console.log("Name: "+  auxUser.userName +" Time: " + auxUser.clicks + " Clicks: "+ auxUser.time);
+            console.log("Name: "+  auxUser.userName +" Time: " + auxUser.time);
             }
         })
     }
