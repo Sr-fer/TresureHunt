@@ -179,10 +179,9 @@ class Model {
         */
         var auxUser = this.getUser("PlayerUser")
 
-        console.log("Time Ranking")
         $.ajax({
-            data:{"name": auxUser.userName ,"clicks": auxUser.clicks , "time": auxUser.time},
-            url:'php/main.php',
+            data:{"name": auxUser.userName , "time": auxUser.time},
+            url:'php/timeRequest.php',
             type:'get',
             success:function(response){
             var conect = JSON.parse(response);
@@ -204,6 +203,25 @@ class Model {
             type:'POST',
             success:function(response){
             console.log(response);
+            }
+        })
+    }
+
+    sendRequestClicks() {
+
+        /**
+        * @param {String} auxUser Objeto de la clase Usuario de la cual se van a recoger los datos
+        */
+        var auxUser = this.getUser("PlayerUser")
+
+        $.ajax({
+            data:{"name": auxUser.userName ,"clicks": auxUser.clicks},
+            url:'php/clicksRequest.php',
+            type:'get',
+            success:function(response){
+            var conect = JSON.parse(response);
+            console.log(conect);
+            console.log("Name: "+  auxUser.userName + " Clicks: " + auxUser.clicks);
             }
         })
     }

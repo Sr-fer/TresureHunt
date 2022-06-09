@@ -71,7 +71,8 @@ class Controller {
             auxUser.setClicks(this.model.clicks) //definir los clikcs del jugador
             auxUser.setTime(this.model.timerSet) //definir el tiempo del jugador
             this.model.uploadRequest() //subida al php
-            this.model.sendRequestTime() //llamada php
+            this.model.sendRequestTime() //llamada php Tiempo
+            this.model.sendRequestClicks() //llamada php Clicks
                 
             /**
             * @param {String} othGame Variable para jugar otra partida
